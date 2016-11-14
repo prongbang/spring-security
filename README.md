@@ -107,6 +107,7 @@
 					</li>
 				</ul>
 			</li>
+			<li><h4>Spring Security Remember me</h4></li>
 			<li>
 				<h4>Role:</h4>
 				<ul>
