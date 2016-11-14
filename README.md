@@ -8,7 +8,7 @@
 <h2>Spring Security XML-based project</h2>
 <ul>
 	<li>
-		<h2>Using the default login form</h2>
+	<h3>Using the default login form</h3>
 		<ul>
 			<li>
 				<h4>Technologies used:</h4>
@@ -28,7 +28,7 @@
 		</ul>
 	</li>
 	<li>
-		<h2>Using the default login form</h2>
+	<h3>Using the default login form</h3>
 		<ul>
 			<li>
 				<h4>Technologies used:</h4>
@@ -59,7 +59,7 @@
 		</ul>
 	</li>
 	<li>
-		<h2>Custom login form</h2>
+	<h3>Custom login form</h3>
 		<ul>
 			<li>
 				<h4>Technologies used:</h4>
