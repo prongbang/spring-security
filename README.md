@@ -8,7 +8,7 @@
 <h2>Spring Security XML-based project</h2>
 <ul>
 	<li>
-	<h3>Using the default login form</h3>
+		<h3>Using the default login form</h3>
 		<ul>
 			<li>
 				<h4>Technologies used:</h4>
@@ -28,7 +28,7 @@
 		</ul>
 	</li>
 	<li>
-	<h3>Using the default login form</h3>
+		<h3>Using the default login form</h3>
 		<ul>
 			<li>
 				<h4>Technologies used:</h4>
@@ -59,7 +59,7 @@
 		</ul>
 	</li>
 	<li>
-	<h3>Custom login form and error code</h3>
+		<h3>Custom login form and error code</h3>
 		<ul>
 			<li>
 				<h4>Technologies used:</h4>
@@ -74,40 +74,45 @@
 				</ul>
 			</li>
 			<li>
-				<h4>Custom Login:</h4>
+				<h4>Add new:</h4>
 				<ul>
 					<li>
-						<h5>Create Login Controller</h5>
+						<h4>Custom Login:</h4>
 						<ul>
-							<li>src/main/java/com/prongbang/sec/controller/LoginController.java</li>
+							<li>
+								<h5>Create Login Controller</h5>
+								<ul>
+									<li>src/main/java/com/prongbang/sec/controller/LoginController.java</li>
+								</ul>
+							</li>
+							<li>
+								<h5>Create Login Page</h5>
+								<ul>
+									<li>src/main/webapp/WEB-INF/templates/login.html</li>
+								</ul>
+							</li>
 						</ul>
 					</li>
 					<li>
-						<h5>Create Login Page</h5>
+						<h4>Custom Error:</h4>
 						<ul>
-							<li>src/main/webapp/WEB-INF/templates/login.html</li>
+							<li>
+								<h5>Create Error Controller</h5>
+								<ul>
+									<li>src/main/java/com/prongbang/sec/controller/ErrorController.java</li>
+								</ul>
+							</li>
+							<li>
+								<h5>Add error code</h5>
+								<ul>
+									<li>src/main/webapp/WEB-INF/web.xml</li>
+								</ul>
+							</li>
 						</ul>
 					</li>
+					<li><h4>Spring Security Remember me</h4></li>
 				</ul>
 			</li>
-			<li>
-				<h4>Custom Error:</h4>
-				<ul>
-					<li>
-						<h5>Create Error Controller</h5>
-						<ul>
-							<li>src/main/java/com/prongbang/sec/controller/ErrorController.java</li>
-						</ul>
-					</li>
-					<li>
-						<h5>Add error code</h5>
-						<ul>
-							<li>src/main/webapp/WEB-INF/web.xml</li>
-						</ul>
-					</li>
-				</ul>
-			</li>
-			<li><h4>Spring Security Remember me</h4></li>
 			<li>
 				<h4>Role:</h4>
 				<ul>
