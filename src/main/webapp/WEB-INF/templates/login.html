@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Login</title>
+	<object th:include="/fragments/head" th:remove="tag"></object>
+</head>
+<body>
+	<section class="hero is-fullheight is-bold" id="login_page">
+		<div class="hero-body">
+			<div class="container">
+				<div class="columns is-vcentered">
+					<div class="column is-4 is-offset-4">
+						<form th:action="@{/j_spring_security_check}" method="post">
+							<div class="card-content">
+								<h1 class="title">Login</h1>
+								<div th:if="${error} != null" class="notification is-danger" v-bind:style="error">
+								  <button v-on:click="close('error')" type="button" class="delete"></button>
+								  <span th:text="${error}" th:remove="tag"></span>
+								</div>
+								<div th:if="${msg} != null" class="notification is-success" v-bind:style="msg">
+								  <button v-on:click="close('msg')" type="button" class="delete"></button>
+								  <span th:text="${msg}" th:remove="tag"></span>
+								</div>
+								<p class="control">
+									<input class="input" name="j_username" type="text" placeholder="Username"/>
+								</p>
+								<p class="control">
+									<input class="input" name="j_password" type="password" placeholder="Password"/>
+								</p>
+								<p class="control">
+									<label class="checkbox"> <input type="checkbox" name="_spring_security_remember_me"/>
+										Remember me
+									</label>
+								</p>
+								<p class="control">
+									<button type="submit" class="button is-primary is-medium is-fullwidth">
+										Login
+									</button>
+								</p>
+								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<script src="../../../resources/js/login.js" th:src="@{/resources/js/login.js}" type="text/javascript"></script>
+	
+</body>
+</html>

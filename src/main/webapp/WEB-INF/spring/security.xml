@@ -6,10 +6,33 @@
 	http://www.springframework.org/schema/security 
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
+	<!-- 
+		- Migrating from Spring Security 3.x to 4.x (XML Configuration)
+		- http://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-xml.html#m3to4-xmlnamespace-form-login 
+	-->
+
 	<http auto-config="true">
-        <intercept-url pattern="/" 		  access="isAuthenticated()" />
+        
+        <intercept-url pattern="/" access="isAuthenticated()" />
         <intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/dba**"   access="hasRole('ADMIN') and hasRole('DBA')" />
+        <intercept-url pattern="/dba**" access="hasRole('ADMIN') and hasRole('DBA')" />
+        
+        <form-login
+		    login-page="/login"
+		    login-processing-url="/j_spring_security_check"
+		    default-target-url="/"
+			authentication-failure-url="/login?error"
+			username-parameter="j_username"
+			password-parameter="j_password" />
+		
+		<logout
+			logout-url="/j_spring_security_logout" 
+			logout-success-url="/login?logout" />
+		
+		<remember-me
+			remember-me-parameter="_spring_security_remember_me" 
+			remember-me-cookie="SPRING_SECURITY_REMEMBER_ME_COOKIE" />
+		
     </http>
   
     <authentication-manager >

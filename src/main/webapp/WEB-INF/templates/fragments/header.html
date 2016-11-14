@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div th:fragment="header"> 
-		<section class="hero is-dark">
+		<section class="hero is-primary">
 	      <div class="hero-body">
 	        <div class="container">
 	          <p class="title">
@@ -26,7 +26,7 @@
 		      <a class="nav-item is-tab" id="dba" th:href="@{/dba}">Database Administrator</a>
 		    </div>
 		    <div class="nav-right" th:if="${#authorization.expression('isAuthenticated()')}"> 
-				<form id="form-logout" th:action="@{/logout}" method="post">
+				<form id="form-logout" th:action="@{/j_spring_security_logout}" method="post">
 					<input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 				</form>
 		    	<a onclick="document.getElementById('form-logout').submit();" class="nav-item is-tab">Logout</a>
