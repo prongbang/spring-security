@@ -1,4 +1,4 @@
-# Spring Security 4 Tutorial
+# Spring Security 4 Tutorials
 <h2>Recommended system requirements:</h2>
 <ul>
 <li><a href="https://www.eclipse.org/downloads/packages/release/Luna/SR2" target="_blank">Eclipse Luna 4.4.2</a></li>
@@ -31,8 +31,8 @@
 <li>Maven 4.0.0</li>
 <li>Spring 4.3.4.RELEASE</li>
 <li>Spring Security 4.2.0.RELEASE</li>
-<li><a href="http://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html" target="_blank">Thymeleaf 3.0.0.RELEASE</a></li>
-<li><a href="https://github.com/thymeleaf/thymeleaf-extras-springsecurity" target="_blank">Thymeleaf-extras-springsecurity4 3.0.0.RELEASE</a></li>
+<li><a href="http://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html" target="_blank">Thymeleaf-Spring 3.0.0.RELEASE</a></li>
+<li><a href="https://github.com/thymeleaf/thymeleaf-extras-springsecurity" target="_blank">Thymeleaf-Extras-Springsecurity4 3.0.0.RELEASE</a></li>
 <li>Apache Commons Logging 1.2</li>
 <li>Slf4j-nop 1.7.21</li>
 </ul>
