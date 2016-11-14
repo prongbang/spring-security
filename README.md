@@ -38,6 +38,12 @@
 </ul>
 </li>
 <li>
+<h4>Role:</h4>
+<ul>
+<li>User</li>
+<li>Admin</li>
+<li>Dba</li>
+</ul>
 <h4>Download:</h4>
 <ul>
 <li><a href="https://github.com/prongbang/spring-security/releases/tag/v1.0.1" target="_blank">Source Code</a></li>
