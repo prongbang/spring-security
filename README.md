@@ -59,7 +59,7 @@
 		</ul>
 	</li>
 	<li>
-	<h3>Custom login form</h3>
+	<h3>Custom login form and error code</h3>
 		<ul>
 			<li>
 				<h4>Technologies used:</h4>
@@ -86,6 +86,23 @@
 						<h5>Create Login Page</h5>
 						<ul>
 							<li>src/main/webapp/WEB-INF/templates/login.html</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>Custom Error:</h4>
+				<ul>
+					<li>
+						<h5>Create Error Controller</h5>
+						<ul>
+							<li>src/main/java/com/prongbang/sec/controller/ErrorController.java</li>
+						</ul>
+					</li>
+					<li>
+						<h5>Add error code</h5>
+						<ul>
+							<li>src/main/webapp/WEB-INF/web.xml</li>
 						</ul>
 					</li>
 				</ul>
