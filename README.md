@@ -40,7 +40,7 @@
 <li>
 <h4>Download:</h4>
 <ul>
-<li><a href="#" target="_blank">Comming Soon...</a></li>
+<li><a href="https://github.com/prongbang/spring-security/releases/tag/v1.0.1" target="_blank">Source Code</a></li>
 </ul>
 </li>
 </ul>
