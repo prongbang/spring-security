@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Database Administrator</title>
+	<object th:include="/fragments/head" th:remove="tag" ></object>
+</head>
+<body>
+	
+	<div th:include="fragments/header" th:remove="tag"></div>
+	
+	<section class="section">
+		<div class="container" style="height:250px">
+			<h1 class="title">Logged user : <strong th:text="${#authentication.name}">User</strong></h1>
+			<h2 class="subtitle">Roles : <strong th:text="${#authentication.principal.authorities}">[ROLE_USER, ROLE_ADMIN, ROLE_DBA]</strong></h2>		
+		</div>
+	</section>
+	
+	<div th:include="fragments/footer" th:remove="tag"></div>
+
+	<script>
+		var navItem = document.getElementById("dba"); 
+		navItem.className += " is-active";
+	</script>	
+</body>
+</html>

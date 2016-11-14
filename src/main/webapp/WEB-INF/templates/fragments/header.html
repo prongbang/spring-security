@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title></title>
+</head>
+<body>
+	<div th:fragment="header"> 
+		<section class="hero is-dark">
+	      <div class="hero-body">
+	        <div class="container">
+	          <p class="title">
+	            Spring Security 4
+	          </p>
+	          <p class="subtitle">
+	            Spring MVC + Thymeleaf 3 + Spring Security 4 Example.
+	          </p>
+	        </div>
+	      </div>
+	    </section>
+	    <nav class="nav has-shadow">
+		  <div class="container">
+		    <div class="nav-left" id="navbar">
+		      <a class="nav-item is-tab" id="home" th:href="@{/}">Home</a>
+		      <a class="nav-item is-tab" id="admin" th:href="@{/admin}">Administrator</a>
+		      <a class="nav-item is-tab" id="dba" th:href="@{/dba}">Database Administrator</a>
+		    </div>
+		    <div class="nav-right" th:if="${#authorization.expression('isAuthenticated()')}"> 
+				<form id="form-logout" th:action="@{/logout}" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				</form>
+		    	<a onclick="document.getElementById('form-logout').submit();" class="nav-item is-tab">Logout</a>
+		    </div>
+		  </div>
+		</nav>
+	</div>
+</body>
+</html>

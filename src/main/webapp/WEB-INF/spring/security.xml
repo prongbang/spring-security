@@ -6,10 +6,20 @@
 	http://www.springframework.org/schema/security 
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<http />
-
-	<user-service>
-		<user name="user" password="password" authorities="ROLE_USER" />
-	</user-service>
+	<http auto-config="true">
+        <intercept-url pattern="/" 		  access="isAuthenticated()" />
+        <intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/dba**"   access="hasRole('ADMIN') and hasRole('DBA')" />
+    </http>
+  
+    <authentication-manager >
+        <authentication-provider>
+            <user-service>
+                <user name="user"  password="password" authorities="ROLE_USER" />
+                <user name="admin" password="password" authorities="ROLE_ADMIN" />
+                <user name="dba"   password="password" authorities="ROLE_ADMIN,ROLE_DBA" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
 
 </b:beans>
