@@ -203,7 +203,8 @@ INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
 
 INSERT INTO `authorities` (`username`, `authority`) VALUES ('user', 'ROLE_USER');
 INSERT INTO `authorities` (`username`, `authority`) VALUES ('admin', 'ROLE_ADMIN');
-INSERT INTO `authorities` (`username`, `authority`) VALUES ('dba', 'ROLE_ADMIN,ROLE_DBA');
+INSERT INTO `authorities` (`username`, `authority`) VALUES ('dba', 'ROLE_ADMIN');
+INSERT INTO `authorities` (`username`, `authority`) VALUES ('dba', 'ROLE_DBA');
 						</pre>
 					</li>
 				</ul>
@@ -211,9 +212,27 @@ INSERT INTO `authorities` (`username`, `authority`) VALUES ('dba', 'ROLE_ADMIN,R
 			<li>
 				<h4>Role:</h4>
 				<ul>
-					<li>User</li>
-					<li>Admin</li>
-					<li>Dba</li>
+					<li>
+						<h5>user</h5>
+						<ul>
+         						<li>Username : user</li>
+         						<li>Password : password</li>
+     						</ul>
+					</li>
+					<li>
+						<h5>Admin</h5>
+						<ul>
+         						<li>Username : admin</li>
+         						<li>Password : password</li>
+     						</ul>
+					</li>
+					<li>
+						<h5>Dba</h5>
+						<ul>
+         						<li>Username : dba</li>
+         						<li>Password : password</li>
+     						</ul>
+					</li>
 				</ul>
 			</li>
 			<li>
