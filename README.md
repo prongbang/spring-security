@@ -410,4 +410,7 @@ INSERT INTO [dbo].[authorities] ([username], [authority]) VALUES ('dba', 'ROLE_D
 			</li>
 		</ul>
 	</li>
+	<li>
+		<h3>Custom login using dao – UserDetailsService</h3>
+	</li>
 </ul>
