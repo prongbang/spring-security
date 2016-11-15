@@ -277,6 +277,9 @@ INSERT INTO `authorities` (`username`, `authority`) VALUES ('dba', 'ROLE_DBA');
 					<li>
 						<h4>Password Encode SHA-256</h4>
 					</li>
+					<li>
+						<h4>Local Repositories</h4>
+					</li>
 				</ul>
 			</li>
 			<li>
