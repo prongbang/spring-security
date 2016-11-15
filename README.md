@@ -195,7 +195,7 @@ CREATE TABLE `authorities` (
 					<li>
 						<pre>
 --
--- Password SHA-256 hash
+-- Password SHA-256 hash.
 --
 INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
 ('user', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', true);
@@ -206,6 +206,9 @@ INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
 
 INSERT INTO `authorities` (`username`, `authority`) VALUES ('user', 'ROLE_USER');
 INSERT INTO `authorities` (`username`, `authority`) VALUES ('admin', 'ROLE_ADMIN');
+-- 
+-- Spring security jdbc config to auth user with multiple roles.
+-- 
 INSERT INTO `authorities` (`username`, `authority`) VALUES ('dba', 'ROLE_ADMIN');
 INSERT INTO `authorities` (`username`, `authority`) VALUES ('dba', 'ROLE_DBA');
 						</pre>
