@@ -7,11 +7,13 @@
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<!-- 
-		- Migrating from Spring Security 3.x to 4.x (XML Configuration)
-		- http://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-xml.html#m3to4-xmlnamespace-form-login 
+		- Migrating from Spring Security 3.x to 4.x (XML Configuration).
+		- http://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-xml.html#m3to4-xmlnamespace-form-login
+		- Spring Security Reference.
+		- http://docs.spring.io/spring-security/site/docs/4.2.x/reference/htmlsingle/ 
 	-->
 
-	<http auto-config="true">
+	<http auto-config="true" use-expressions="true">
         
         <intercept-url pattern="/" access="isAuthenticated()" />
         <intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
@@ -33,16 +35,32 @@
 			remember-me-parameter="_spring_security_remember_me" 
 			remember-me-cookie="SPRING_SECURITY_REMEMBER_ME_COOKIE" />
 		
+		<access-denied-handler error-page="/403" />
+		
     </http>
-  
-    <authentication-manager >
-        <authentication-provider>
-            <user-service>
+
+	<!-- 
+		- jdbc auth
+		- dataSource reference from applicationContext.xml file 
+	-->
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				authorities-by-username-query="SELECT username, authority FROM authorities WHERE username = ?"
+				users-by-username-query="SELECT username, password, enabled FROM users WHERE username = ?" />
+			<password-encoder hash="sha-256" />
+		</authentication-provider>
+	</authentication-manager>
+	
+	 <!-- In memory auth -->
+	 <!-- authentication-manager>
+	 	<authentication-provider>
+	 		<user-service>
                 <user name="user"  password="password" authorities="ROLE_USER" />
                 <user name="admin" password="password" authorities="ROLE_ADMIN" />
-                <user name="dba"   password="password" authorities="ROLE_ADMIN,ROLE_DBA" />
+                <user name="dba"   password="password" authorities="ROLE_ADMIN, ROLE_DBA" />
             </user-service>
-        </authentication-provider>
-    </authentication-manager>
-
+	 	</authentication-provider>
+	 </authentication-manager -->
+	 
 </b:beans>

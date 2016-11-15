@@ -27,7 +27,7 @@ public class ErrorController {
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String _403(ModelMap model) {
 
-		model.addAttribute("errMsg", "403 Forbidden");
+		model.addAttribute("errMsg", "403 Access is denied");
 
 		return "error";
 	}
