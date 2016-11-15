@@ -15,6 +15,24 @@
 		<mysql.version>6.0.5</mysql.version>
 	</properties>
 
+	<repositories>
+
+		<!-- Local Repository -->
+		<repository>
+			<id>libs</id>
+			<name>libs</name>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>ignore</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<url>file:///${project.basedir}\libs</url>
+		</repository>
+
+	</repositories>
+
 	<dependencies>
 
 		<dependency>
@@ -57,7 +75,7 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- spring dao -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -110,11 +128,18 @@
 			<version>1.7.21</version>
 		</dependency>
 
-		<!-- mysql -->
+		<!-- MySQL Connector -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
+		</dependency>
+		
+		<!-- Local Repositories MSSQL 4.0 Connector -->
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>4.0</version>
 		</dependency>
 
 	</dependencies>

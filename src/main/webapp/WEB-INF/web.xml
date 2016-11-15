@@ -87,7 +87,7 @@
 		<location>/500</location>
 	</error-page>
 
-	<!-- Resource Reference DB MSSQL -->
+	<!-- Resource Reference DB Microsoft SQL Server -->
 	<!-- resource-ref>
 		<description>MSSQLDB</description>
 		<res-ref-name>jdbc/MSSQLDB</res-ref-name>
