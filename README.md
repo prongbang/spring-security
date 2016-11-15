@@ -155,6 +155,60 @@
 				</ul>
 			</li>
 			<li>
+				<h4>Create Database:</h4>
+				<ul>
+					<li>
+						<pre> 
+CREATE DATABASE spring;
+						</pre>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>Create Table:</h4>
+				<ul>
+					<li>
+						<pre> 
+CREATE TABLE `users` (
+	`username` VARCHAR(50) NOT NULL,
+	`password` VARCHAR(512) NOT NULL,
+	`enabled` TINYINT(1) NOT NULL,
+	PRIMARY KEY (`username`)
+) 
+
+CREATE TABLE `authorities` (
+	`username` VARCHAR(50) NOT NULL,
+	`authority` VARCHAR(50) NOT NULL,
+	UNIQUE INDEX `ix_auth_username` (`username`, `authority`),
+	CONSTRAINT `fk_authorities_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+) 
+						</pre>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>Insert Data</h4>
+				<ul>
+					<li>
+						<pre>
+--
+-- Password SHA512 hash
+--
+INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
+('user', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', true);
+INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
+('admin', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', true);
+INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
+('dba', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', true);
+
+INSERT INTO `authorities` (`username`, `authority`) VALUES ('user', 'ROLE_USER');
+INSERT INTO `authorities` (`username`, `authority`) VALUES ('admin', 'ROLE_ADMIN');
+INSERT INTO `authorities` (`username`, `authority`) VALUES ('dba', 'ROLE_ADMIN,ROLE_DBA');
+						</pre>
+					</li>
+				</ul>
+			</li>
+			<li>
 				<h4>Role:</h4>
 				<ul>
 					<li>User</li>
