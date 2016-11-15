@@ -139,6 +139,7 @@
 					<li>Spring 4.3.4.RELEASE</li>
 					<li>Spring Security 4.2.0.RELEASE</li>
 					<li>Spring Jdbc 4.3.4.RELEASE</li>
+					<li>Spring Dao 2.0.8</li>
 					<li>Mysql Connector Java 6.0.5</li>
 					<li><a href="http://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html" target="_blank">Thymeleaf-Spring 3.0.0.RELEASE</a></li>
 					<li><a href="https://github.com/thymeleaf/thymeleaf-extras-springsecurity" target="_blank">Thymeleaf-Extras-Springsecurity4 3.0.0.RELEASE</a></li>
