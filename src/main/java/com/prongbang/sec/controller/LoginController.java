@@ -12,6 +12,8 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(
 		@RequestParam(value = "error", required = false) String error,
+		@RequestParam(value = "expired", required = false) String expired,
+		@RequestParam(value = "duplicate", required = false) String duplicate,
 		@RequestParam(value = "logout", required = false) String logout) {
 
 		ModelAndView model = new ModelAndView();
@@ -24,6 +26,18 @@ public class LoginController {
 		if (logout != null) {
 			
 			model.addObject("msg", "You have been logged out.");
+			
+		}
+		
+		if (expired != null) {
+			
+			model.addObject("expired", "Session expired.");
+			
+		}
+		
+		if (duplicate != null) {
+			
+			model.addObject("duplicate", "Session expired.");
 			
 		}
 		

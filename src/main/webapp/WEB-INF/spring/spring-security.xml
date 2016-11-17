@@ -1,8 +1,8 @@
 <b:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:b="http://www.springframework.org/schema/beans" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/security 
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
@@ -13,7 +13,21 @@
 		- http://docs.spring.io/spring-security/site/docs/4.2.x/reference/htmlsingle/ 
 	-->
 
-	<http auto-config="true" use-expressions="true">
+	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled"/>
+
+	<!-- Configuring RoleVoter bean to use custom access roles, by default roles should be in the form ROLE_{XXX} -->
+	<b:bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
+		<b:property name="rolePrefix" value=""></b:property>
+	</b:bean>
+
+	<b:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<b:constructor-arg name="decisionVoters" ref="roleVoter" />
+	</b:bean>
+
+	<http 
+		authentication-manager-ref="daoAuthManager" 
+		auto-config="true" 
+		use-expressions="true">
         
         <intercept-url pattern="/" access="isAuthenticated()" />
         <intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
@@ -28,22 +42,58 @@
 			password-parameter="j_password" />
 		
 		<logout
+			invalidate-session="false"
 			logout-url="/j_spring_security_logout" 
 			logout-success-url="/login?logout" />
 		
-		<remember-me
+		<!--remember-me
 			remember-me-parameter="_spring_security_remember_me" 
-			remember-me-cookie="SPRING_SECURITY_REMEMBER_ME_COOKIE" />
-		
+			remember-me-cookie="SPRING_SECURITY_REMEMBER_ME_COOKIE" /-->
+		 
+        <remember-me services-ref="rememberMeServices" />
+		 
 		<access-denied-handler error-page="/403" />
 		
+        <session-management
+        	invalid-session-url="/login?expired"
+        	session-authentication-error-url="/login?error" 
+        	session-fixation-protection="newSession">
+        	
+    		<concurrency-control 
+    			max-sessions="1" 
+    			error-if-maximum-exceeded="true" 
+    			expired-url="/login?expired" />
+    		
+		</session-management>
+		
     </http>
+	
+	<!-- Remember Me Services -->
+	<b:bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
+        <b:constructor-arg value="myAppKey"/>
+        <b:constructor-arg ref="userDetailsService"/>
+        <b:constructor-arg ref="tokenRepository"/>
+        <b:property name="cookieName" value="SPRING_SECURITY_REMEMBER_ME_COOKIE"/>
+        <b:property name="tokenLength" value="32"/>
+        <b:property name="parameter" value="_spring_security_remember_me"/>
+    </b:bean>
+
+    <b:bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl"/>
+	
+	<!-- Dao authentication -->
+	<authentication-manager id="daoAuthManager">
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder hash="sha-256" />
+		</authentication-provider>
+	</authentication-manager>
+	
+	<b:bean id="userDetailsService" class="com.prongbang.sec.security.dao.impl.AppUserDetailsService" />
 
 	<!-- 
-		- jdbc auth
-		- dataSource reference from applicationContext.xml file 
+		- Jdbc authentication
+		- dataSource reference from spring-jdbc.xml file
 	-->
-	<authentication-manager>
+	<authentication-manager id="jdbcAuthManager">
 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"
 				authorities-by-username-query="SELECT username, authority FROM authorities WHERE username = ?"
@@ -52,8 +102,8 @@
 		</authentication-provider>
 	</authentication-manager>
 	
-	 <!-- In memory auth -->
-	 <!-- authentication-manager>
+	 <!-- In memory authentication -->
+	 <authentication-manager id="inMemoryAuthManager">
 	 	<authentication-provider>
 	 		<user-service>
                 <user name="user"  password="password" authorities="ROLE_USER" />
@@ -61,6 +111,6 @@
                 <user name="dba"   password="password" authorities="ROLE_ADMIN, ROLE_DBA" />
             </user-service>
 	 	</authentication-provider>
-	 </authentication-manager -->
+	 </authentication-manager>
 	 
 </b:beans>

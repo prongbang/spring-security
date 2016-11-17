@@ -21,9 +21,9 @@
 	<!-- is used to activate the annotation for beans -->
 	<context:annotation-config />
 
-	<!-- Activates the Annotations + Register the beans by looking inside the 
-		base-package -->
+	<!-- Activates the Annotations + Register the beans by looking inside the base-package -->
 	<context:component-scan base-package="com.prongbang.sec.controller" />
+	<context:component-scan base-package="com.prongbang.sec.service" />
 
 	<!-- Use MVC annotations -->
 	<mvc:annotation-driven />
