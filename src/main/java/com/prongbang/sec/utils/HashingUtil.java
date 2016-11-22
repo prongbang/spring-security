@@ -23,11 +23,12 @@ public class HashingUtil {
 	        }
 
 	        return hexString.toString();
+	        
 	    } catch(Exception ex){
 	       
 	    }
 		
-		return null;
+		return "";
 	}
 	
 }

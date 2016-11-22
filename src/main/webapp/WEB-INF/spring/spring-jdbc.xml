@@ -29,15 +29,15 @@
 	</bean>
 	
 	<!-- Microsoft SQL Server Connection -->
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<!-- bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 		<property name="url" value="jdbc:sqlserver://172.16.1.99:1433;databaseName=spring" />
 		<property name="username" value="sa" />
 		<property name="password" value="Stringbufferx64" />
-	</bean>
+	</bean -->
 	
 	<!-- MySQL Connection -->
-	<!-- bean id="propertyConfigurer"
+	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
@@ -50,7 +50,7 @@
 	    <property name="url" value="${jdbc.url}" />
 	    <property name="username" value="${jdbc.username}" />
 	    <property name="password" value="${jdbc.password}" />
-	</bean -->
+	</bean>
 	
 	<!-- JNDI DataSource Microsoft SQL Server -->
 	<!-- bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">

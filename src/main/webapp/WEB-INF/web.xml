@@ -38,6 +38,10 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+
 	<!-- Spring MVC front controller-->
 	<welcome-file-list>
 		<welcome-file>/</welcome-file>

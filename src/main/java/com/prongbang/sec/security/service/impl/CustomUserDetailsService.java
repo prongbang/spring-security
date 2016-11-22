@@ -1,4 +1,4 @@
-package com.prongbang.sec.security.dao.impl;
+package com.prongbang.sec.security.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +18,7 @@ import com.prongbang.sec.service.AuthoritiesService;
 import com.prongbang.sec.service.UsersService;
 
 @Service
-public class AppUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UsersService usersService;
@@ -38,20 +38,13 @@ public class AppUserDetailsService implements UserDetailsService {
 			users = usersService.findByUsername(username);
 			
 			if (users == null) {
-
+				
 				System.out.println(username + " not found");
 				
 			} else {
-				
-				authoritiesList = authoritiesService.findByUsername(username);
 
+				authoritiesList = authoritiesService.findByUsername(username);
 			}
-			
-			Authorities auth = new Authorities();
-			auth.setUsername("prongbang");
-			auth.setAuthority("ROLE_ADMIN");
-			
-//			System.out.println(authoritiesService.add(auth));
 			
 		} catch (Exception e) {
 
@@ -79,6 +72,6 @@ public class AppUserDetailsService implements UserDetailsService {
 			}
 		}
 
-		return new AppUserDetails(users, authorities);
+		return new CustomUserDetails(users, authorities);
 	}
 }

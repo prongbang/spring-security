@@ -1,4 +1,4 @@
-package com.prongbang.sec.security.dao.impl;
+package com.prongbang.sec.security.service.impl;
 
 import java.util.Collection;
 
@@ -7,14 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.prongbang.sec.model.Users;
 
-public class AppUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = -462553908752111643L;
 
 	private Users users;
 	private Collection<GrantedAuthority> grants;
 	
-	public AppUserDetails(Users users, Collection<GrantedAuthority> grants) {
+	public CustomUserDetails(Users users, Collection<GrantedAuthority> grants) {
 		
 		this.users = users;
 		
@@ -30,13 +30,13 @@ public class AppUserDetails implements UserDetails {
 	@Override
 	public String getPassword() {
 		
-		return users.getPassword();
+		return users != null ? users.getPassword() : null;
 	}
 
 	@Override
 	public String getUsername() {
 		
-		return users.getUsername();
+		return users != null ? users.getUsername() : null;
 	}
 
 	@Override
@@ -60,7 +60,6 @@ public class AppUserDetails implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		
-		//return users.isEnabled() != null ? users.isEnabled() == false ? false : true : false;
 		return users == null ? false : users.isEnabled() != null ? users.isEnabled() == 1 : false;
 	}
 

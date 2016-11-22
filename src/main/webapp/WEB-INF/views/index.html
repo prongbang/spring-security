@@ -11,7 +11,8 @@
 	<section class="section">
 		<div class="container" style="height:250px">
 			<h1 class="title">Logged user : <strong th:text="${#authentication.name}">User</strong></h1>
-			<h2 class="subtitle">Roles : <strong th:text="${#authentication.principal.authorities}">[ROLE_USER, ROLE_ADMIN, ROLE_DBA]</strong></h2>		
+			<!--h2 class="subtitle">Roles : <strong th:text="${#authentication.principal.authorities}">[ROLE_USER, ROLE_ADMIN, ROLE_DBA]</strong></h2-->
+			<h2 class="subtitle">Roles : <strong th:text="${#authentication.authorities}">[ROLE_USER, ROLE_ADMIN, ROLE_DBA]</strong></h2>		
 		</div>
 	</section>
 	

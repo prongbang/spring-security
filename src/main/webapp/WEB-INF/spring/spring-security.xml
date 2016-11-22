@@ -15,17 +15,8 @@
 
 	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled"/>
 
-	<!-- Configuring RoleVoter bean to use custom access roles, by default roles should be in the form ROLE_{XXX} -->
-	<b:bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
-		<b:property name="rolePrefix" value=""></b:property>
-	</b:bean>
-
-	<b:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
-		<b:constructor-arg name="decisionVoters" ref="roleVoter" />
-	</b:bean>
-
-	<http 
-		authentication-manager-ref="daoAuthManager" 
+	<http
+		authentication-manager-ref="customAuthProvider"
 		auto-config="true" 
 		use-expressions="true">
         
@@ -46,14 +37,6 @@
 			logout-url="/j_spring_security_logout" 
 			logout-success-url="/login?logout" />
 		
-		<!--remember-me
-			remember-me-parameter="_spring_security_remember_me" 
-			remember-me-cookie="SPRING_SECURITY_REMEMBER_ME_COOKIE" /-->
-		 
-        <remember-me services-ref="rememberMeServices" />
-		 
-		<access-denied-handler error-page="/403" />
-		
         <session-management
         	invalid-session-url="/login?expired"
         	session-authentication-error-url="/login?error" 
@@ -66,51 +49,15 @@
     		
 		</session-management>
 		
+		<access-denied-handler error-page="/403" />
+		
     </http>
 	
-	<!-- Remember Me Services -->
-	<b:bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
-        <b:constructor-arg value="myAppKey"/>
-        <b:constructor-arg ref="userDetailsService"/>
-        <b:constructor-arg ref="tokenRepository"/>
-        <b:property name="cookieName" value="SPRING_SECURITY_REMEMBER_ME_COOKIE"/>
-        <b:property name="tokenLength" value="32"/>
-        <b:property name="parameter" value="_spring_security_remember_me"/>
-    </b:bean>
-
-    <b:bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl"/>
-	
-	<!-- Dao authentication -->
-	<authentication-manager id="daoAuthManager">
-		<authentication-provider user-service-ref="userDetailsService">
-			<password-encoder hash="sha-256" />
-		</authentication-provider>
+	<!-- Custom Authentication Provider -->
+	<authentication-manager id="customAuthProvider"> 
+		<authentication-provider ref="customAuthenticationProvider" />
 	</authentication-manager>
 	
-	<b:bean id="userDetailsService" class="com.prongbang.sec.security.dao.impl.AppUserDetailsService" />
+	<b:bean id="customAuthenticationProvider" class="com.prongbang.sec.security.authentication.impl.CustomAuthenticationProvider" />
 
-	<!-- 
-		- Jdbc authentication
-		- dataSource reference from spring-jdbc.xml file
-	-->
-	<authentication-manager id="jdbcAuthManager">
-		<authentication-provider>
-			<jdbc-user-service data-source-ref="dataSource"
-				authorities-by-username-query="SELECT username, authority FROM authorities WHERE username = ?"
-				users-by-username-query="SELECT username, password, enabled FROM users WHERE username = ?" />
-			<password-encoder hash="sha-256" />
-		</authentication-provider>
-	</authentication-manager>
-	
-	 <!-- In memory authentication -->
-	 <authentication-manager id="inMemoryAuthManager">
-	 	<authentication-provider>
-	 		<user-service>
-                <user name="user"  password="password" authorities="ROLE_USER" />
-                <user name="admin" password="password" authorities="ROLE_ADMIN" />
-                <user name="dba"   password="password" authorities="ROLE_ADMIN, ROLE_DBA" />
-            </user-service>
-	 	</authentication-provider>
-	 </authentication-manager>
-	 
 </b:beans>
