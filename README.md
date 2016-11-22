@@ -478,4 +478,67 @@ INSERT INTO [dbo].[authorities] ([username], [authority]) VALUES ('dba', 'ROLE_D
 			</li>
 		</ul>
 	</li>
+
+	<li>
+		<h3>Custom login – Authentication Provider</h3>
+		<ul>
+			<li>
+				<h4>Technologies used:</h4>
+				<ul>
+					<li>Maven 4.0.0</li>
+					<li>Spring 4.3.4.RELEASE</li>
+					<li>Spring Security 4.2.0.RELEASE</li>
+					<li>Spring Jdbc 4.3.4.RELEASE</li>
+					<li>Spring Dao 2.0.8</li>
+					<li>Mysql Connector Java 6.0.5</li>
+					<li>sqljdbc4 4.0</li>
+					<li><a href="http://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html" target="_blank">Thymeleaf-Spring 3.0.0.RELEASE</a></li>
+					<li><a href="https://github.com/thymeleaf/thymeleaf-extras-springsecurity" target="_blank">Thymeleaf-Extras-Springsecurity4 3.0.0.RELEASE</a></li>
+					<li>Apache Commons Logging 1.2</li>
+					<li>Slf4j-nop 1.7.21</li>
+				</ul>
+			</li>
+			<li>
+				<h4>Add new:</h4>
+				<ul>
+					<li>
+						<h4>Custom login – Authentication Provider</h4>
+					</li>
+				</ul>
+			</li>
+			<li>
+			<h4>Role:</h4>
+				<ul>
+					<li>
+						<h5>user</h5>
+						<ul>
+         						<li>Username : user</li>
+         						<li>Password : password</li>
+     						</ul>
+					</li>
+					<li>
+						<h5>Admin</h5>
+						<ul>
+         						<li>Username : admin</li>
+         						<li>Password : password</li>
+     						</ul>
+					</li>
+					<li>
+						<h5>Dba</h5>
+						<ul>
+         						<li>Username : dba</li>
+         						<li>Password : password</li>
+     						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>Download:</h4>
+				<ul>
+					<li><a href="https://github.com/prongbang/spring-security/releases/tag/v1.0.6" target="_blank">Source Code</a></li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	
 </ul>
