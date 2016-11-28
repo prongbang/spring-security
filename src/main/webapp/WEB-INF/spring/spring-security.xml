@@ -1,5 +1,6 @@
 <b:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:b="http://www.springframework.org/schema/beans" 
+	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -7,57 +8,141 @@
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<!-- 
-		- Migrating from Spring Security 3.x to 4.x (XML Configuration).
+		- #Migrating from Spring Security 3.x to 4.x (XML Configuration).
 		- http://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-xml.html#m3to4-xmlnamespace-form-login
-		- Spring Security Reference.
+		- #Adding in Your Own Filters
+		- http://docs.spring.io/spring-security/site/docs/4.2.x/reference/htmlsingle/#ns-custom-filters
+		- #Parent Elements of <remember-me>
+		- http://docs.spring.io/spring-security/site/docs/4.2.x/reference/htmlsingle/#nsa-remember-me-parents
+		- #Spring Security Reference.
 		- http://docs.spring.io/spring-security/site/docs/4.2.x/reference/htmlsingle/ 
 	-->
 
 	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled"/>
 
+	<!-- Request Matcher -->
+	<b:bean id="dbaRequestMatcher" class="org.springframework.security.web.util.matcher.AndRequestMatcher">
+		<b:constructor-arg>
+			<b:list>
+				<b:bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+					<b:constructor-arg value="/dba/**" />
+				</b:bean>
+			</b:list>
+		</b:constructor-arg>
+	</b:bean>
+
 	<http
-		authentication-manager-ref="customAuthProvider"
-		auto-config="true" 
-		use-expressions="true">
+		auto-config="false"
+		use-expressions="true"
+		entry-point-ref="authenticationEntryPoint"
+		authentication-manager-ref="daoAuthenticationManager">
         
         <intercept-url pattern="/" access="isAuthenticated()" />
-        <intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/dba**" access="hasRole('ADMIN') and hasRole('DBA')" />
+        <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/authorities/**" access="hasRole('ADMIN')" />
+        <intercept-url request-matcher-ref="dbaRequestMatcher" access="hasRole('ADMIN') and hasRole('DBA')" />
+		
+		<custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
+		<custom-filter ref="logoutFilter" position="LOGOUT_FILTER" />
+		<custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER" />
+		<custom-filter ref="sessionTimeoutRedirectFilter" after="EXCEPTION_TRANSLATION_FILTER"/>
         
-        <form-login
-		    login-page="/login"
-		    login-processing-url="/j_spring_security_check"
-		    default-target-url="/"
-			authentication-failure-url="/login?error"
-			username-parameter="j_username"
-			password-parameter="j_password" />
-		
-		<logout
-			invalidate-session="false"
-			logout-url="/j_spring_security_logout" 
-			logout-success-url="/login?logout" />
-		
         <session-management
-        	invalid-session-url="/login?expired"
-        	session-authentication-error-url="/login?error" 
-        	session-fixation-protection="newSession">
-        	
-    		<concurrency-control 
-    			max-sessions="1" 
-    			error-if-maximum-exceeded="true" 
-    			expired-url="/login?expired" />
-    		
-		</session-management>
+			session-authentication-error-url="/login?error"
+			session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+			
+		<remember-me key="TOKEN_KEY" user-service-ref="customUserDetailsService" />
 		
 		<access-denied-handler error-page="/403" />
 		
+		<csrf token-repository-ref="tokenRepository" />
+		
     </http>
 	
-	<!-- Custom Authentication Provider -->
-	<authentication-manager id="customAuthProvider"> 
-		<authentication-provider ref="customAuthenticationProvider" />
+	<!-- Csrf Cookie -->
+	<b:bean id="tokenRepository" class="org.springframework.security.web.csrf.CookieCsrfTokenRepository" p:cookieHttpOnly="false"/>
+	
+	<!-- Logout Filter -->
+	<b:bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<b:constructor-arg value="/login?logout"/>
+		<b:constructor-arg>
+			<b:bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+		</b:constructor-arg>
+		<b:property name="filterProcessesUrl" value="/j_spring_security_logout"/>
+	</b:bean>
+	
+	<!-- Login URL Authentication Entry Point -->
+	<b:bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <b:constructor-arg name="loginFormUrl" value="/login" />
+    </b:bean>
+    
+    <!-- Username and Password Authentication Filter -->
+	<b:bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<b:property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<b:property name="usernameParameter" value="j_username" />
+		<b:property name="passwordParameter" value="j_password" />
+		<b:property name="rememberMeServices" ref="rememberMeServices" />
+		<b:property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+		<b:property name="authenticationManager" ref="daoAuthenticationManager" />
+		<b:property name="authenticationFailureHandler" ref="customAuthenticationFailureHandler" />
+		<b:property name="authenticationSuccessHandler" ref="customAuthenticationSuccessHandler" />
+	</b:bean>
+	
+	<!-- Concurrent Session Filter -->
+	<b:bean id="concurrencyFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
+        <b:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+        <b:constructor-arg name="expiredUrl" value="/login?expired" />
+    </b:bean>
+    
+    <!-- Maintains a registry of SessionInformation instances -->
+    <b:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+	
+	<!-- Session Authentication Strategy -->
+	<b:bean id="sessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+        <b:constructor-arg>
+            <b:list>
+                <b:bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+                    <b:constructor-arg ref="sessionRegistry" />
+                    <b:property name="maximumSessions" value="2" />
+                    <b:property name="exceptionIfMaximumExceeded" value="true" />
+                </b:bean>
+                <b:bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
+                <b:bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+                    <b:constructor-arg ref="sessionRegistry" />
+                </b:bean>
+            </b:list>
+        </b:constructor-arg>
+    </b:bean>
+	
+	<!-- Custom Success Handler -->
+	<b:bean id="customAuthenticationFailureHandler" class="com.prongbang.sec.security.authentication.CustomAuthenticationFailureHandler" />
+	<b:bean id="customAuthenticationSuccessHandler" class="com.prongbang.sec.security.authentication.CustomAuthenticationSuccessHandler" />
+	<b:bean id="customLogoutSuccessHandler" class="com.prongbang.sec.security.authentication.CustomLogoutSuccessHandler" />
+
+	<!-- Web and AJAX Request -->
+	<b:bean id="sessionTimeoutRedirectFilter" class="com.prongbang.sec.security.filter.SessionTimeoutRedirectFilter">
+	    <b:property name="customSessionExpiredErrorCode" value="901"/>
+	</b:bean>
+
+	<!-- Remember Me Services -->
+	<b:bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
+        <b:constructor-arg value="TOKEN_KEY" />
+        <b:constructor-arg ref="customUserDetailsService" />
+        <b:constructor-arg ref="inMemoryTokenRepository" />
+        <b:property name="tokenLength" value="32" />
+        <b:property name="cookieName" value="SPRING_SECURITY_REMEMBER_ME_COOKIE" />
+        <b:property name="parameter" value="_spring_security_remember_me" />
+    </b:bean>
+    
+    <b:bean id="inMemoryTokenRepository" class="org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl" />
+	
+	<!-- Dao Authentication -->
+	<authentication-manager id="daoAuthenticationManager">
+		<authentication-provider user-service-ref="customUserDetailsService">
+			<password-encoder hash="sha-256" />
+		</authentication-provider>
 	</authentication-manager>
 	
-	<b:bean id="customAuthenticationProvider" class="com.prongbang.sec.security.authentication.impl.CustomAuthenticationProvider" />
+	<b:bean id="customUserDetailsService" class="com.prongbang.sec.security.userdetails.CustomUserDetailsService" />
 
 </b:beans>

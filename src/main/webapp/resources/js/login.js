@@ -3,7 +3,8 @@ new Vue({
 	data: {
 		error: { display: "block"},
 		msg: { display: "block"},
-		expired: { display: "block" }
+		expired: { display: "block" },
+		duplicate: { display: "block" }
 	},
 	methods:{
 		close: function(opt) {
@@ -13,6 +14,8 @@ new Vue({
 				this.msg.display = "none";
 			} else if(opt == "expired") {
 				this.expired.display = "none";
+			} else if(opt == "duplicate") {
+				this.duplicate.display = "none";
 			}
 		}
 	}

@@ -23,9 +23,24 @@
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<async-supported>true</async-supported>
 	</filter>
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+    <!-- Character Setting -->
+	<filter>
+		<filter-name>charsetFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>charsetFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
@@ -38,6 +53,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<!-- Use concurrent session support -->
 	<listener>
 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
@@ -60,8 +76,8 @@
 
 	<!-- Web Session Timeout (mins) --> 
 	<session-config> 
-	    <session-timeout>30</session-timeout> 
-	</session-config>   
+	    <session-timeout>1</session-timeout>
+	</session-config>
 	
 	<!-- Error Pages -->
 	<error-page>
@@ -94,11 +110,19 @@
 	</error-page>
 
 	<!-- Resource Reference DB Microsoft SQL Server -->
-	<!-- resource-ref>
+	<resource-ref>
 		<description>MSSQLDB</description>
 		<res-ref-name>jdbc/MSSQLDB</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
-	</resource-ref -->
+	</resource-ref>
+	
+	<!-- Resource Reference DB MySQL -->
+	<resource-ref>
+		<description>MYSQLDB</description>
+		<res-ref-name>jdbc/MYSQLDB</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
 
 </web-app>

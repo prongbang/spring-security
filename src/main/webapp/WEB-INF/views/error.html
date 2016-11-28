@@ -5,16 +5,16 @@
 	<object th:include="/fragments/head" th:remove="tag" ></object>
 </head>
 <body>
-	<section class="hero is-fullheight is-bold">
+	<section th:class="'hero is-fullheight is-bold ' + ${bgColor}">
 		<div class="hero-body">
 			<div class="container">
 				<div class="columns is-vcentered">
 					<div class="column is-4 is-offset-4">
 						<div class="content has-text-centered">
 							<h1 class="title">
-								<strong class="is-primary" th:text="${errMsg}"></strong>
+								<span class="is-primary" th:text="${errMsg}" th:remove="tag"></span>
 							</h1>
-							<span><a th:href="@{/}">Back</a></span>
+							<span class="subtitle"><a th:href="@{/}">Back</a></span>
 						</div>
 					</div>
 				</div>

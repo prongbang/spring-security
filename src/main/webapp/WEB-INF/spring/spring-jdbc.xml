@@ -37,7 +37,7 @@
 	</bean -->
 	
 	<!-- MySQL Connection -->
-	<bean id="propertyConfigurer"
+	<!--bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
@@ -50,11 +50,16 @@
 	    <property name="url" value="${jdbc.url}" />
 	    <property name="username" value="${jdbc.username}" />
 	    <property name="password" value="${jdbc.password}" />
-	</bean>
+	</bean-->
 	
 	<!-- JNDI DataSource Microsoft SQL Server -->
-	<!-- bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<!--bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/MSSQLDB" />
-	</bean -->
+	</bean-->
+	
+	<!-- JNDI DataSource MySQL -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/MYSQLDB" />
+	</bean>
 	
 </beans>

@@ -5,14 +5,14 @@
 	<object th:include="/fragments/head" th:remove="tag"></object>
 </head>
 <body>
-	<section class="hero is-fullheight is-bold" id="login_page">
+	<section class="hero is-fullheight is-bold is-primary" id="login_page">
 		<div class="hero-body">
 			<div class="container">
 				<div class="columns is-vcentered">
 					<div class="column is-4 is-offset-4">
 						<form th:action="@{/j_spring_security_check}" method="post">
-							<div class="card-content">
-								<h1 class="title">Login</h1>
+							<div class="card-content hero is-light">
+								<h1 class="title" style="color: #363636;">Login</h1>
 								<div th:if="${error} != null" class="notification is-danger" v-bind:style="error">
 								  <button v-on:click="close('error')" type="button" class="delete"></button>
 								  <span th:text="${error}" th:remove="tag"></span>
@@ -21,9 +21,13 @@
 								  <button v-on:click="close('msg')" type="button" class="delete"></button>
 								  <span th:text="${msg}" th:remove="tag"></span>
 								</div>
-								<div th:if="${expired} != null" class="notification is-warning">
+								<div th:if="${expired} != null" class="notification is-warning" v-bind:style="expired">
 								  <button v-on:click="close('expired')" type="button" class="delete"></button>
 								  <span th:text="${expired}" th:remove="tag"></span>
+								</div>
+								<div th:if="${duplicate} != null" class="notification is-warning" v-bind:style="duplicate">
+								  <button v-on:click="close('duplicate')" type="button" class="delete"></button>
+								  <span th:text="${duplicate}" th:remove="tag"></span>
 								</div>
 								<p class="control">
 									<input class="input" name="j_username" type="text" placeholder="Username"/>
@@ -31,11 +35,11 @@
 								<p class="control">
 									<input class="input" name="j_password" type="password" placeholder="Password"/>
 								</p>
-								<!--p class="control">
+								<p class="control">
 									<label class="checkbox"> <input type="checkbox" name="_spring_security_remember_me"/>
 										Remember me
 									</label>
-								</p-->
+								</p>
 								<p class="control">
 									<button type="submit" class="button is-primary is-medium is-fullwidth">
 										Login

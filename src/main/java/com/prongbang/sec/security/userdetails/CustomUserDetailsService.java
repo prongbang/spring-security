@@ -1,4 +1,4 @@
-package com.prongbang.sec.security.service.impl;
+package com.prongbang.sec.security.userdetails;
 
 import java.util.ArrayList;
 import java.util.Collection;

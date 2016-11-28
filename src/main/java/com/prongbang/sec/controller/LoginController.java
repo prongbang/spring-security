@@ -37,7 +37,7 @@ public class LoginController {
 		
 		if (duplicate != null) {
 			
-			model.addObject("duplicate", "Session expired.");
+			model.addObject("duplicate", "Session expired duplicate login.");
 			
 		}
 		

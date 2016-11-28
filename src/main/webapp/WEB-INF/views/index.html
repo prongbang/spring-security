@@ -4,19 +4,40 @@
 	<title>Spring MVC + Thymeleaf 3 + Spring Security 4</title>
 	<object th:include="/fragments/head" th:remove="tag" ></object>
 </head>
-<body>
+<body style="height:550px">
 	
 	<div th:include="fragments/header" th:remove="tag"></div>
 	
 	<section class="section">
-		<div class="container" style="height:250px">
+		<div class="container">
 			<h1 class="title">Logged user : <strong th:text="${#authentication.name}">User</strong></h1>
 			<!--h2 class="subtitle">Roles : <strong th:text="${#authentication.principal.authorities}">[ROLE_USER, ROLE_ADMIN, ROLE_DBA]</strong></h2-->
 			<h2 class="subtitle">Roles : <strong th:text="${#authentication.authorities}">[ROLE_USER, ROLE_ADMIN, ROLE_DBA]</strong></h2>		
 		</div>
 	</section>
+	<section class="section" id="authoritity"> 
+		<div class="container">
+			<h1 class="title">AJAX Request <a v-on:click="load()" v-bind:class="isLoading" class="button is-active">Load Data</a> => <span><a target="_blank" th:href="@{/authorities/find-all}">http://localhost:8080/spring-security/authorities/find-all</a></span></h1>
+			<div class="notification is-danger" style="display:none;" v-bind:style="{display:error==null?'none':'block'}">
+			  <button type="button" class="delete"></button>
+			  {{error}}
+			</div>
+			<table class="table">
+				<tr>
+					<th>User</th>
+					<th>Roles</th>
+				</tr>
+				<tr v-for="r in roles">
+					<td>{{r.username}}</td>
+					<td>{{r.authority}}</td>
+				</tr>
+			</table>
+		</div>
+	</section>
 	
 	<div th:include="fragments/footer" th:remove="tag"></div>
+	
+	<script th:src="@{/resources/js/authoritity.js}" type="text/javascript"></script>
 	
 	<script>
 		var navItem = document.getElementById("home"); 
