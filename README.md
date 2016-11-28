@@ -55,12 +55,19 @@
 			</li>
 		</ul>
 	</li>
-
 	<li>
 		<h3>Custom login – Authentication Provider</h3>
 		<ul>
 			<li>
 				<h4>Download : <a href="https://github.com/prongbang/spring-security/releases/tag/v1.0.6" target="_blank">Source Code</a></h4>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<h3>Custom login using dao – Custom Authentication</h3>
+		<ul>
+			<li>
+				<h4>Download : <a href="https://github.com/prongbang/spring-security/releases/tag/v1.0.7" target="_blank">Source Code</a></h4>
 			</li>
 		</ul>
 	</li>
